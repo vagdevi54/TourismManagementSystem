@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Success | TravelGo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .success-card {
+            max-width: 600px;
+            margin: 60px auto;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            background: white;
+        }
+
+        .success-icon {
+            color: #28a745;
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .success-heading {
+            color: #28a745;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+        }
+
+        .booking-details {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .booking-details .row {
+            margin-bottom: 10px;
+        }
+
+        .booking-details .label {
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        .booking-details .value {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .action-buttons {
+            margin-top: 30px;
+        }
+
+        .action-buttons .btn {
+            margin: 0 10px;
+            padding: 10px 20px;
+        }
+
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container">
+            <a class="navbar-brand" href="/">TravelGo</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/tours">Tours</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/my-bookings">My Bookings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact">Contact Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="success-card text-center">
+            <i class="fas fa-check-circle success-icon"></i>
+            <h1 class="success-heading">Payment Successful!</h1>
+            <p class="lead mb-4">Your booking has been confirmed. Thank you for choosing TravelGo!</p>
+
+            <div class="booking-details">
+                <div class="row">
+                    <div class="col-6 text-end label">Booking ID</div>
+                    <div class="col-6 text-start value">#<%= booking.id %></div>
+                </div>
+                <div class="row">
+                    <div class="col-6 text-end label">Package</div>
+                    <div class="col-6 text-start value"><%= booking.package_name %></div>
+                </div>
+                <div class="row">
+                    <div class="col-6 text-end label">Destination</div>
+                    <div class="col-6 text-start value"><%= booking.destination_name %></div>
+                </div>
+                <div class="row">
+                    <div class="col-6 text-end label">Travel Date</div>
+                    <div class="col-6 text-start value"><%= new Date(booking.travel_date).toLocaleDateString() %></div>
+                </div>
+                <div class="row">
+                    <div class="col-6 text-end label">Number of People</div>
+                    <div class="col-6 text-start value"><%= booking.number_of_people %></div>
+                </div>
+                <div class="row">
+                    <div class="col-6 text-end label">Total Amount</div>
+                    <div class="col-6 text-start value">₹<%= booking.total_amount %></div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <a href="/my-bookings" class="btn btn-primary">View My Bookings</a>
+                <a href="/tours" class="btn btn-outline-primary">Book Another Trip</a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer bg-light mt-5 py-3">
+        <div class="container text-center">
+            <p class="text-muted mb-0">© 2024 TravelGo. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

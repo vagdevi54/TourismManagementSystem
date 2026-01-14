@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Travel Management</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: url('https://img.freepik.com/free-vector/realistic-travel-background-with-elements_52683-77784.jpg?semt=ais_hybrid') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+        }
+        .wrapper {
+            width: 400px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.15);
+            text-align: center;
+        }
+        .wrapper h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+        .wrapper p {
+            color: #666;
+            margin-bottom: 25px;
+        }
+        .wrapper .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .wrapper label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #444;
+        }
+        .wrapper input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .wrapper input:focus {
+            border-color: #4158d0;
+        }
+        .wrapper button {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            font-weight: 500;
+            border: none;
+            background: linear-gradient(-135deg, #c850c0, #4158d0);
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 15px;
+        }
+        .wrapper button:hover {
+            background: linear-gradient(-135deg, #4158d0, #c850c0);
+            transform: translateY(-2px);
+        }
+        .wrapper a {
+            color: #4158d0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .wrapper a:hover {
+            color: #c850c0;
+            text-decoration: underline;
+        }
+        .logo {
+            margin-bottom: 20px;
+        }
+        .logo a {
+            color: #333;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="logo">
+            <a href="/">Travel Management</a>
+        </div>
+        <h2>Welcome Back!</h2>
+        <p>Please login to continue</p>
+
+        <form action="/login" method="POST">
+            <div class="input-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="pwd" placeholder="Enter your password" required>
+            </div>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <p style="margin-top: 20px;">Don't have an account? <a href="/register">Register here</a></p>
+    </div>
+</body>
+</html>

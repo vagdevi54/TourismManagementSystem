@@ -1,0 +1,64 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0">
+                        <i class="fas fa-check-circle me-2"></i>
+                        Booking Confirmed!
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-success" role="alert">
+                        Thank you for your booking! Your tour package has been successfully reserved.
+                    </div>
+
+                    <h4 class="mb-4">Booking Details</h4>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <p><strong>Booking Reference:</strong><br>#<%= booking.id %></p>
+                            <p><strong>Package Name:</strong><br><%= booking.package_name %></p>
+                            <p><strong>Travel Date:</strong><br><%= new Date(booking.travel_date).toLocaleDateString() %></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Number of People:</strong><br><%= booking.number_of_people %></p>
+                            <p><strong>Total Amount:</strong><br>$<%= parseFloat(booking.total_amount).toFixed(2) %></p>
+                            <p><strong>Status:</strong><br>
+                                <span class="badge bg-<%= booking.status === 'confirmed' ? 'success' : 'warning' %>">
+                                    <%= booking.status.charAt(0).toUpperCase() + booking.status.slice(1) %>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <h4 class="mb-3">Customer Information</h4>
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <p><strong>Name:</strong><br><%= booking.user_name %></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Email:</strong><br><%= booking.user_email %></p>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info" role="alert">
+                        <i class="fas fa-info-circle me-2"></i>
+                        A confirmation email has been sent to your registered email address.
+                    </div>
+
+                    <hr>
+
+                    <div class="d-grid gap-2">
+                        <a href="/my-bookings" class="btn btn-primary">
+                            <i class="fas fa-list me-2"></i>View All Bookings
+                        </a>
+                        <a href="/packages" class="btn btn-outline-secondary">
+                            <i class="fas fa-search me-2"></i>Browse More Packages
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

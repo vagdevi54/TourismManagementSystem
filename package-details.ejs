@@ -1,0 +1,188 @@
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-8">
+            <!-- Existing package details -->
+            <h1 class="mb-4"><%= package.name %></h1>
+            <p class="lead"><%= package.description %></p>
+            <div class="mb-4">
+                <h4>Package Details</h4>
+                <ul class="list-unstyled">
+                    <li><strong>Duration:</strong> <%= package.duration %> days</li>
+                    <li><strong>Price:</strong> $<%= package.price %></li>
+                    <li><strong>Maximum Participants:</strong> <%= package.max_participants %></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <!-- Booking form -->
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Book This Package</h5>
+                    <form action="/book-package" method="POST">
+                        <input type="hidden" name="package_id" value="<%= package.id %>">
+                        <div class="mb-3">
+                            <label for="travel_date" class="form-label">Travel Date</label>
+                            <input type="date" class="form-control" id="travel_date" name="travel_date" 
+                                min="<%= new Date().toISOString().split('T')[0] %>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="number_of_people" class="form-label">Number of People</label>
+                            <input type="number" class="form-control" id="number_of_people" name="number_of_people" 
+                                min="1" max="<%= package.max_participants %>" required>
+                            <small class="text-muted">Maximum <%= package.max_participants %> people allowed</small>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Total Amount</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="text" class="form-control" id="total_amount" readonly>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Book Now</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reviews Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3 class="mb-4">Customer Reviews</h3>
+            
+            <% if (reviews && reviews.length > 0) { %>
+                <div class="row">
+                    <% reviews.forEach(review => { %>
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <h5 class="card-title mb-0"><%= review.user_name %></h5>
+                                        <div class="rating">
+                                            <% for(let i = 1; i <= 5; i++) { %>
+                                                <i class="fas fa-star<%= i <= review.rating ? '' : '-o' %>"></i>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                    <p class="card-text"><%= review.comment %></p>
+                                    <p class="text-muted small mb-0">Reviewed on <%= new Date(review.review_date).toLocaleDateString() %></p>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+            <% } else { %>
+                <div class="alert alert-info">
+                    No reviews yet. Be the first to review this package!
+                </div>
+            <% } %>
+
+            <!-- Review Form -->
+            <% if (user) { %>
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Write a Review</h5>
+                        <form action="/submit-review" method="POST">
+                            <input type="hidden" name="package_id" value="<%= package.id %>">
+                            <div class="mb-3">
+                                <label class="form-label">Rating</label>
+                                <div class="star-rating">
+                                    <% for(let i = 5; i >= 1; i--) { %>
+                                        <input type="radio" id="star<%= i %>" name="rating" value="<%= i %>" required>
+                                        <label for="star<%= i %>" title="<%= i %> stars">
+                                            <i class="fas fa-star"></i>
+                                        </label>
+                                    <% } %>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="comment" class="form-label">Your Review</label>
+                                <textarea class="form-control" id="comment" name="comment" rows="3" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Review</button>
+                        </form>
+                    </div>
+                </div>
+            <% } else { %>
+                <div class="alert alert-warning mt-4">
+                    Please <a href="/login">login</a> to write a review.
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<style>
+    .rating {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+    }
+    .rating input {
+        display: none;
+    }
+    .rating label {
+        cursor: pointer;
+        color: #ddd;
+        font-size: 1.5rem;
+        margin-right: 5px;
+    }
+    .rating input:checked ~ label,
+    .rating label:hover,
+    .rating label:hover ~ label {
+        color: #ffc107;
+    }
+
+    .star-rating {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-start;
+        gap: 0.2rem;
+    }
+
+    .star-rating input {
+        display: none;
+    }
+
+    .star-rating label {
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: #ddd;
+        transition: color 0.2s ease-in-out;
+    }
+
+    .star-rating label:hover,
+    .star-rating label:hover ~ label,
+    .star-rating input:checked ~ label {
+        color: #ffc107;
+    }
+
+    .star-rating label i {
+        font-size: 24px;
+    }
+</style>
+
+<script>
+    // Calculate total amount when number of people changes
+    const packagePrice = parseFloat('<%= package.price %>');
+    
+    document.getElementById('number_of_people').addEventListener('input', function() {
+        const people = parseInt(this.value) || 0;
+        const total = packagePrice * people;
+        document.getElementById('total_amount').value = total.toFixed(2);
+    });
+
+    // Initialize total amount on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        const peopleInput = document.getElementById('number_of_people');
+        if (peopleInput.value) {
+            const people = parseInt(peopleInput.value) || 0;
+            const total = packagePrice * people;
+            document.getElementById('total_amount').value = total.toFixed(2);
+        }
+    });
+
+    // Set minimum date to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('travel_date').min = today;
+</script> 

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Destinations | TravelGo</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background-color: #008cba;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 30px;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 5px 10px;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        .destinations {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .destination-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .destination {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 280px;
+            transition: transform 0.3s ease-in-out;
+            position: relative;
+        }
+
+        .destination:hover, .highlight {
+            transform: scale(1.05);
+            border: 2px solid #008cba;
+        }
+
+        .destination img {
+            width: 100%;
+            border-radius: 10px;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #008cba;
+            margin-top: 5px;
+        }
+
+        .wishlist {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: white;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            color: gray;
+        }
+
+        .wishlist.active {
+            color: red;
+        }
+
+        .book-now-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 15px;
+            background-color: #008cba;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .book-now-btn:hover {
+            background-color: #005f8b;
+        }
+
+        .voice-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 15px;
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        .voice-btn:hover {
+            background-color: #cc5500;
+        }
+
+        footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 20px 10px;
+            margin-top: 20px;
+        }
+
+        .container mt-4 {
+            padding: 20px;
+        }
+
+        .row mb-4 {
+            margin-bottom: 20px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-muted {
+            color: #6c757d;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+
+        .col {
+            flex: 0 0 auto;
+            padding: 15px;
+        }
+
+        .col-md-4 {
+            flex: 0 0 33.333333%;
+            max-width: 33.333333%;
+        }
+
+        .card h-100 {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .shadow-sm {
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+
+        .position-relative {
+            position: relative;
+        }
+
+        .destination-img {
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .country-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .destination-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .stat {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .stat i {
+            color: #0d6efd;
+            margin-right: 5px;
+        }
+
+        .card-title {
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .btn-primary {
+            background-color: #0d6efd;
+            border: none;
+            padding: 10px 20px;
+        }
+
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+        }
+
+        @media (max-width: 768px) {
+            .col-md-4 {
+                padding: 0 10px;
+            }
+            
+            .destination-img {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">TravelGo</div>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/destination">Destinations</a>
+                <a href="/contact">Contact</a>
+                <a href="/payment">Payment</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container mt-4">
+        <div class="row mb-4">
+            <div class="col">
+                <h2 class="text-center">Explore Beautiful Destinations</h2>
+                <p class="text-center text-muted">Discover amazing places for your next adventure</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <% destinations.forEach(function(destination) { %>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="position-relative">
+                            <img src="<%= destination.img || '/images/' + destination.name.toLowerCase() + '.jpg' %>" 
+                                 class="card-img-top destination-img" 
+                                 alt="<%= destination.name %>">
+                            <div class="country-badge">
+                                <i class="fas fa-map-marker-alt"></i> <%= destination.country || 'India' %>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"><%= destination.name %></h5>
+                            <span class="badge bg-primary mb-2"><%= destination.country %></span>
+                            <p class="card-text"><%= destination.description || 'No description available' %></p>
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    <%= destination.package_count %> tours available
+                                </small>
+                            </p>
+                            <p class="card-text">
+                                <strong>Starting from <%= destination.min_price %></strong>
+                            </p>
+                            <a href="/booking?place=<%= encodeURIComponent(destination.name) %>" class="btn btn-primary">
+                                Book Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; <%= new Date().getFullYear() %> TravelGo | Explore the World</p>
+    </footer>
+
+    <script>
+        // Add click event listeners to all Book Now buttons
+        document.querySelectorAll('.book-now').forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Get the destination name from the URL
+                const destinationName = this.href.split('place=')[1];
+                if (!destinationName) {
+                    e.preventDefault();
+                    alert('Please select a valid destination');
+                    return;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

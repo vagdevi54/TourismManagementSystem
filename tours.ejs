@@ -1,0 +1,198 @@
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="text-center">Tour Packages</h2>
+            <p class="text-center text-muted">Explore our amazing destinations</p>
+        </div>
+    </div>
+
+    <!-- Sorting and Filtering Options -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="btn-group">
+                <a href="/tours?sort=price" class="btn btn-outline-primary <%= sort === 'price' ? 'active' : '' %>">
+                    <i class="fas fa-sort-amount-down"></i> Price (High to Low)
+                </a>
+                <a href="/tours?sort=price_asc" class="btn btn-outline-primary <%= sort === 'price_asc' ? 'active' : '' %>">
+                    <i class="fas fa-sort-amount-up"></i> Price (Low to High)
+                </a>
+                <a href="/tours?sort=duration" class="btn btn-outline-primary <%= sort === 'duration' ? 'active' : '' %>">
+                    <i class="fas fa-clock"></i> Duration
+                </a>
+                <a href="/tours?sort=seats" class="btn btn-outline-primary <%= sort === 'seats' ? 'active' : '' %>">
+                    <i class="fas fa-chair"></i> Available Seats
+                </a>
+            </div>
+        </div>
+        <div class="col-md-6 text-end">
+            <div class="d-flex justify-content-end mb-4">
+                <a href="/tours" class="btn btn-primary me-2">
+                    <i class="fas fa-globe"></i> All Tours
+                </a>
+                <a href="/tours?available=true" class="btn btn-outline-primary">
+                    <i class="fas fa-check-circle"></i> Available Only
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <% packages.forEach(function(package) { %>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="position-relative">
+                        <img src="<%= package.image_url || 'https://via.placeholder.com/300x200' %>" 
+                             class="card-img-top package-img" alt="<%= package.name %>">
+                        <div class="destination-badge">
+                            <i class="fas fa-map-marker-alt"></i> <%= package.country %>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="card-title"><%= package.name %></h5>
+                            <span class="badge bg-dark">
+                                <i class="fas fa-map-marker-alt"></i> <%= package.country %>
+                            </span>
+                        </div>
+                        <p class="card-text text-muted mb-2">
+                            <i class="fas fa-location-dot"></i> <%= package.destination_name %>
+                        </p>
+                        <p class="card-text"><%= package.description %></p>
+                        <div class="package-features mb-3">
+                            <div class="feature">
+                                <i class="fas fa-clock"></i>
+                                <span><%= package.duration %> days</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-users"></i>
+                                <span>Max <%= package.max_participants %> people</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-chair"></i>
+                                <span><%= package.available_seats || package.max_participants %> seats left</span>
+                            </div>
+                        </div>
+                        <p class="price mb-3"><%= package.formattedPrice %></p>
+                        <div class="d-grid gap-2">
+                            <a href="/package/<%= package.id %>" class="btn btn-outline-primary">
+                                <i class="fas fa-info-circle"></i> View Details
+                            </a>
+                            <% if (package.available_seats > 0) { %>
+                                <a href="/booking?package=<%= package.id %>" class="btn btn-primary">
+                                    <i class="fas fa-ticket-alt"></i> Book Now
+                                </a>
+                            <% } else { %>
+                                <button class="btn btn-secondary" disabled>
+                                    <i class="fas fa-ban"></i> Fully Booked
+                                </button>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+</div>
+
+<style>
+.package-img {
+    height: 250px;
+    object-fit: cover;
+}
+
+.price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #0d6efd;
+    text-align: center;
+}
+
+.card {
+    transition: transform 0.2s;
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.destination-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+.package-features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    text-align: center;
+}
+
+.feature {
+    background: #f8f9fa;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.feature i {
+    color: #0d6efd;
+    margin-right: 5px;
+}
+
+.card-title {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background-color: #0d6efd;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+}
+
+.btn-outline-primary:hover {
+    background-color: #f8f9fa;
+    color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.btn-group .btn {
+    margin-right: 5px;
+}
+
+.btn-group .btn:last-child {
+    margin-right: 0;
+}
+
+.btn.active {
+    background-color: #0d6efd;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .btn-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-bottom: 1rem;
+    }
+    
+    .btn-group .btn {
+        flex: 1;
+        min-width: 120px;
+        text-align: center;
+    }
+}
+</style> 
